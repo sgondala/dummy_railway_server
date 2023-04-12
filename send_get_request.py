@@ -13,6 +13,7 @@ def send_post_request(url, data):
     return response
 
 if __name__ == "__main__":
+    response = send_get_request("http://0.0.0.0:8000")
     # response = send_get_request("http://sgondala-dummy-server.up.railway.app")
-    response = send_post_request("http://sgondala-dummy-server.up.railway.app/get_email/", data={"name": "Sai Gondala"})
+    # response = send_post_request("http://sgondala-dummy-server.up.railway.app/get_email/", data={"name": "Sai Gondala"})
     print(response.text)

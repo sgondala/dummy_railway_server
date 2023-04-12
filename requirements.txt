@@ -1,6 +1,6 @@
 pandas
-flask
-flask_restful
+# flask
+# flask_restful
 pinecone-client
 openai
 python-dotenv

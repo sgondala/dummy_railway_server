@@ -1,41 +1,31 @@
-# # A simple webserver to handle few get and post requests
-
-# from flask import Flask, request
-# import os
-
-# # On Heroku, the port is set in the environment variable PORT
-# # Listen on 0.0.0.0
-
-# app = Flask(__name__)
-
-
-# @app.route('/get', methods=['GET'])
-# def get():
-#     return "GET request received"
-
-# # Post method expects a json object
-# @app.route('/process_email/', methods=['POST'])
-# def post():
-#     data = request.get_json()
-#     print(data)
-#     return "POST request received"
-
-# if __name__ == '__main__':
-#     # Run app on 0.0.0.0
-#     # Pick port from osenv PORT or default to 5000
-#     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
-
-
-from flask import Flask, jsonify
+from fastapi import FastAPI
+from typing import Dict
+from fastapi.middleware.cors import CORSMiddleware
 import os
 
-app = Flask(__name__)
+app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins (you can specify specific origins if needed)
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all methods (GET, POST, etc.)
+    allow_headers=["*"],  # Allow all headers
+)
 
-@app.route('/')
-def index():
-    return jsonify({"Choo Choo": "Welcome to your Flask app 🚅"})
+# Define the GET method that returns "Hello world" as JSON
+@app.get("/")
+def read_root():
+    return {"message": "Hello world"}
 
+# Define the POST method that takes a JSON, counts the number of keys, and returns the count
+@app.post("/parse_email/")
+def count_keys(json_data: Dict):
+    num_keys = len(json_data.keys())
+    print(json_data)
+    return {"number_of_keys": num_keys}
 
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=os.getenv("PORT", default=5000))
+# Run the FastAPI server using Uvicorn (if running as a script)
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))
