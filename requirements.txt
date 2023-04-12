@@ -1,0 +1,10 @@
+pandas
+# flask
+# flask_restful
+pinecone-client
+openai
+python-dotenv
+# gunicorn
+fastapi
+uvicorn
+asyncpg
