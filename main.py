@@ -1,29 +1,20 @@
-import uvicorn
-import os
-from fastapi import FastAPI
-from fastapi.responses import JSONResponse
-from fastapi.middleware.cors import CORSMiddleware
+# A simple webserver to handle few get and post requests
 
-app = FastAPI()
+from flask import Flask, request
+import json
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins='*',
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+app = Flask(__name__)
 
-@app.get("/")
-def hello_world():
-    return JSONResponse(content={"message": "Hello, World!"})
+@app.route('/get', methods=['GET'])
+def get():
+    return "GET request received"
 
-@app.post("/get_email/")
-def get_email(data: dict):
+# Post method expects a json object
+@app.route('/post', methods=['POST'])
+def post():
+    data = request.get_json()
     print(data)
-    return JSONResponse(
-        content={"message": "Hello, World!"}
-    )
+    return "POST request received"
 
 if __name__ == '__main__':
-    uvicorn.run("main:app", host="0.0.0.0", port=int(os.getenv("PORT", default=5000)), log_level="info")
+    app.run(debug=True)
