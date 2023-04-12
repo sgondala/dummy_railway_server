@@ -20,7 +20,7 @@ def hello_world():
     return JSONResponse(content={"message": "Hello, World!"})
 
 @app.post("/get_email/")
-async def get_email(data: dict):
+def get_email(data: dict):
     print(data)
     return JSONResponse(
         content={"message": "Hello, World!"}
