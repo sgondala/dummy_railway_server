@@ -1,4 +1,5 @@
 import requests
+import json
 
 # A simple function to send a get request to given URL
 def send_get_request(url):
@@ -7,7 +8,8 @@ def send_get_request(url):
 
 # A simple function to send a post request to given URL
 def send_post_request(url, data):
-    response = requests.post(url, data=data)
+    headers = {"Content-Type": "application/json"}
+    response = requests.post(url, data=json.dumps(data), headers=headers)
     return response
 
 if __name__ == "__main__":

@@ -1,8 +1,7 @@
-# from flask import Flask, jsonify, request
 import uvicorn
+import os
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
-import os
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -27,5 +26,4 @@ def get_email(data: dict):
     )
 
 if __name__ == '__main__':
-    import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=os.getenv("PORT", default=5000), log_level="info")
+    uvicorn.run("main:app", host="0.0.0.0", port=int(os.getenv("PORT", default=5000)), log_level="info")
